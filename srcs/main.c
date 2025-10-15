@@ -3,7 +3,8 @@
 
 int main(int argc, char **argv)
 {
-	validation(argc, argv);
+	if (!validation(argc, argv))
+		exit(EXIT_FAILURE);
 }
 
 
