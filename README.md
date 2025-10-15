@@ -1,2 +1,3 @@
 # cub3d
-42 School cub3d project
+
+This repo is made for cub3d project, a 2D map game made in 3D using raycasting.

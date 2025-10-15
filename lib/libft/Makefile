@@ -67,7 +67,9 @@ SRCS	=	\
 		$(SRCS_DR)/ft_strtrim.c \
 		$(SRCS_DR)/ft_substr.c \
 		$(SRCS_DR)/ft_tolower.c \
-		$(SRCS_DR)/ft_toupper.c
+		$(SRCS_DR)/ft_toupper.c \
+		$(SRCS_DR)/get_next_line.c \
+		$(SRCS_DR)/get_next_line_utils.c
 
 OBJS	=	$(patsubst $(SRCS_DR)/%.c,$(OBJS_DR)/%.o,$(SRCS))
 

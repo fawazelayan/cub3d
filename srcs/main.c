@@ -1,7 +1,4 @@
-#include "MLX42/MLX42.h"
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "cub3d.h"
 
 #define BASE_W 900
 #define BASE_H 700
