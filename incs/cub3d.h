@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/10/15 15:57:58 by felayan          ###   ########.fr       */
+/*   Updated: 2025/10/15 17:39:41 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@
 # include "get_next_line.h"
 # include "libft.h"
 # include "MLX42.h"
+
+
+int validation(int argc, char **argv);
 
 #endif

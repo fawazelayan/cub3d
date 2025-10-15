@@ -53,6 +53,7 @@ SRCS	=	\
 		$(SRCS_DR)/ft_split.c \
 		$(SRCS_DR)/ft_strcat.c \
 		$(SRCS_DR)/ft_strchr.c \
+		$(SRCS_DR)/ft_strrchr.c \
 		$(SRCS_DR)/ft_strcmp.c \
 		$(SRCS_DR)/ft_strcpy.c \
 		$(SRCS_DR)/ft_strdup.c \
