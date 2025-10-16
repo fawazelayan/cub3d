@@ -1,8 +1,15 @@
 #include "cub3d.h"
 
+// int main(int argc, char **argv)
+// {
+// 	if (!validation(argc, argv))
+// 		exit(EXIT_FAILURE);
+// }
+
 
 int main(int argc, char **argv)
 {
+    char **lines;
 	if (!validation(argc, argv))
 		exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/10/15 17:39:41 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/10/16 03:35:09 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@
 
 
 int validation(int argc, char **argv);
+char **store_file(char *name);
 
 #endif
