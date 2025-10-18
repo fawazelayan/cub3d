@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 05:09:37 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/18 02:49:18 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:36:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int is_empty_line(char *str)
 char *trim_newline(char *str)
 {
     int l;
-    
+
+    if (!str)
+        return (NULL);
     l = ft_strlen(str);
     if (l > 0 && str[l - 1] == '\n')
         str[l - 1] = '\0';
