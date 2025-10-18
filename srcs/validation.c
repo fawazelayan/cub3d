@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:41:19 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/16 02:42:00 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/10/17 03:12:02 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int validation(int argc, char **argv)
     }
     if (file_name(argv[1], ".cub") || file_check(argv[1]))
         return (0);
+    
     return (1);
 }

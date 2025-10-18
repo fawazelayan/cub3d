@@ -1,18 +1,80 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/17 02:42:07 by aalquraa          #+#    #+#             */
+/*   Updated: 2025/10/18 02:54:15 by aalquraa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "cub3d.h"
+
+
+void	printf_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		printf("%s", split[i]);
+		i++;
+	}
+}
+int main(int argc, char **argv)
+{
+	t_cub3d cub3d;
+	
+	if (!validation(argc, argv))
+		exit(EXIT_FAILURE);
+	char **file;
+	char **map;
+	char **config;
+	file = store_file(argv[1]);
+	split_file(file, &config, &map);
+	init(&cub3d);
+	if (!parse_config_file(&cub3d, config))
+	{
+		free_2d(file);
+		free_2d(config);
+		free_2d(map);
+		free_config(&cub3d.config);
+		return (1);
+	}
+	if (!validate_config(&cub3d.config))
+	{
+		printf("Error\nInvalid in config\n");
+		free_2d(file);
+		free_2d(config);
+		free_2d(map);
+		free_config(&cub3d.config);
+		return (1);
+	}
+	
+	free_2d(file);
+	free_2d(config);
+	free_2d(map);
+	free_config(&cub3d.config);
+
+	return(0);
+}
+	// printf("NO: %s\n", cub3d.config.no);
+	// printf("SO: %s\n", cub3d.config.so);
+	// printf("WE: %s\n", cub3d.config.we);
+	// printf("EA: %s\n", cub3d.config.ea);
+	// printf("F: %d,%d,%d\n", cub3d.config.floor.r, cub3d.config.floor.g, cub3d.config.floor.b);
+	// printf("C: %d,%d,%d\n", cub3d.config.ceiling.r, cub3d.config.ceiling.g, cub3d.config.ceiling.b);
+
 
 // int main(int argc, char **argv)
 // {
 // 	if (!validation(argc, argv))
 // 		exit(EXIT_FAILURE);
 // }
-
-
-int main(int argc, char **argv)
-{
-    char **lines;
-	if (!validation(argc, argv))
-		exit(EXIT_FAILURE);
-}
 
 
 // #define BASE_W 900

@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/10/16 03:35:09 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/10/18 02:49:18 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,43 @@
 # include "libft.h"
 # include "MLX42.h"
 
+typedef struct s_color
+{
+    int r;
+    int g;
+    int b;
+}   t_color;
+
+typedef struct s_config
+{
+    char *no;
+    char *so;
+    char *ea;
+    char *we;
+    t_color floor;
+    t_color ceiling;
+}   t_config;
+
+typedef struct s_cub3d
+{
+    t_config config;
+}   t_cub3d;
+
 
 int validation(int argc, char **argv);
 char **store_file(char *name);
+void split_file(char **file, char ***config, char ***map);
+void init(t_cub3d *cub3d);
+int	parse_config_file(t_cub3d *cub, char **config);
+int parse_color(char *line, t_color *color);
+void	free_config(t_config *c);
+
+
+
+char *skip_space(char *str);
+int is_empty_line(char *str);
+char *trim_newline(char *str);
+void	free_2d(char **str);
+int	validate_config(t_config *config);
 
 #endif
