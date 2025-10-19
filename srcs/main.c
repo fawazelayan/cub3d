@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:42:07 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/18 02:54:15 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/10/19 23:55:31 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,28 @@ void	printf_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		printf("%s", split[i]);
+		printf("%s\n", split[i]);
 		i++;
 	}
+}
+
+void cleanup_all(char **file, char **config, char **map, t_cub3d *cub3d)
+{
+    free_2d(file);
+    free_2d(config);
+    free_2d(map);
+    free_config(&cub3d->config);
+    free_map(&cub3d->map);
 }
 int main(int argc, char **argv)
 {
 	t_cub3d cub3d;
-	
-	if (!validation(argc, argv))
-		exit(EXIT_FAILURE);
 	char **file;
 	char **map;
 	char **config;
+	
+	if (!validation(argc, argv))
+		exit(EXIT_FAILURE);
 	file = store_file(argv[1]);
 	split_file(file, &config, &map);
 	init(&cub3d);
@@ -54,20 +63,21 @@ int main(int argc, char **argv)
 		free_config(&cub3d.config);
 		return (1);
 	}
-	
+    if (!parse_map(&cub3d, map))
+    {
+        cleanup_all(file, config, map, &cub3d);
+        return (1);
+    }
+	//printf_split(cub3d.map.game_map);
+	//printf_split(map);
 	free_2d(file);
 	free_2d(config);
 	free_2d(map);
+	free_map(&cub3d.map);
 	free_config(&cub3d.config);
-
 	return(0);
 }
-	// printf("NO: %s\n", cub3d.config.no);
-	// printf("SO: %s\n", cub3d.config.so);
-	// printf("WE: %s\n", cub3d.config.we);
-	// printf("EA: %s\n", cub3d.config.ea);
-	// printf("F: %d,%d,%d\n", cub3d.config.floor.r, cub3d.config.floor.g, cub3d.config.floor.b);
-	// printf("C: %d,%d,%d\n", cub3d.config.ceiling.r, cub3d.config.ceiling.g, cub3d.config.ceiling.b);
+	
 
 
 // int main(int argc, char **argv)

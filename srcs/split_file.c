@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 03:47:14 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/18 16:41:14 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/10/20 00:14:15 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_map(char *line)
         flag = 0;
         while (line[i])
         {
-            if (line[i] == '1')
+            if (line[i] == '1' || line [i] == '0')
                 flag = 1;
             if (line[i] != ' ' && line[i] != '\t' && line[i] != '0' && line[i] != '1'
                 && line[i] != 'N' && line[i] != 'S' && line[i] != 'E' && line[i] != 'W' && line[i] != '\n')
