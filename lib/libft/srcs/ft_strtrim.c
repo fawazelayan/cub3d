@@ -6,9 +6,10 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 22:11:58 by felayan           #+#    #+#             */
-/*   Updated: 2024/09/12 00:29:23 by felayan          ###   ########.fr       */
+/*   Updated: 2025/10/30 20:55:14 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t	setch(char c, const char *set)
@@ -34,6 +35,8 @@ char	*ft_strtrim(const char *s, const char *set)
 	size_t	en;
 
 	st = 0;
+	if (!s)
+		return (NULL);
 	en = ft_strlen(s);
 	while (s[st] != '\0' && setch(s[st], set))
 		st++;

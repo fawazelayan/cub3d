@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:47:41 by felayan           #+#    #+#             */
-/*   Updated: 2025/02/19 14:47:44 by felayan          ###   ########.fr       */
+/*   Updated: 2025/10/30 18:12:20 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, int *err);
 char	*ft_strjoin_gnl(const char *s1, const char *s2);
 char	*ft_strdup_gnl(const char *s);
 char	*ft_strchr_gnl(const char *s, int c);
@@ -27,4 +27,3 @@ int		ft_strlen_gnl(const char *s);
 int		lentonew(const char *s);
 
 #endif
-//
