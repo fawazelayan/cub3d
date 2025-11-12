@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 06:50:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/18 02:43:35 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:27:15 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ int	atoi_color(char *str)
 
 	i = 0;
 	if (!str || !*str)
-		return (-307);
+		return (-1);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]) && str[i] != ' ' && str[i] != '\t')
-			return (-307);
+			return (-1);
 		i++;
 	}
 	n = ft_atoi(str);
 	if (n < 0 || n > 255)
-		return (-307);
+		return (-1);
 	return (n);
 }
 
-int	parse_color(char *line, t_color *color)
+int	parse_color(char *line, int *rgb, int *count)
 {
 	char	**clr;
 	int		r;
@@ -44,20 +44,21 @@ int	parse_color(char *line, t_color *color)
 	clr = ft_split(line, ',');
 	if (!clr || !clr[0] || !clr[1] || !clr[2])
 	{
-		free_2d(clr);
+		clean_strs(clr);
 		return (0);
 	}
 	r = atoi_color(clr[0]);
 	g = atoi_color(clr[1]);
 	b = atoi_color(clr[2]);
-	if (r == -307 || g == -307 || b == -307)
+	if (r == -1 || g == -1 || b == -1)
 	{
-		free_2d(clr);
+		clean_strs(clr);
 		return (0);
 	}
-	color->r = r;
-	color->g = g;
-	color->b = b;
-	free_2d(clr);
+	rgb[0] = r;
+	rgb[1] = g;
+	rgb[2] = b;
+	(*count)++;
+	clean_strs(clr);
 	return (1);
 }

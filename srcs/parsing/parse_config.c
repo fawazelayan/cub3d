@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 04:31:59 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/18 02:33:02 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/13 02:02:35 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	parse_texture(char *line, char **texture)
 {
 	char	*path;
 	char	*start;
+	int		len;
 
+	len = 0;
 	if (*texture != NULL)
 		return (0);
 	line += 2;
@@ -40,6 +42,12 @@ int	parse_texture(char *line, char **texture)
 	path = ft_substr(start, 0, line - start);
 	if (!path)
 		return (0);
+	len = ft_strlen(path);
+	if (len < 4 || ft_strcmp(path + len - 4, ".png"))
+	{
+		free(path);
+		return (0);
+	}
 	if (!check_texture_file(path))
 	{
 		free(path);
@@ -48,6 +56,7 @@ int	parse_texture(char *line, char **texture)
 	*texture = path;
 	return (1);
 }
+
 int	parse_config_line(t_config *conf, char *line)
 {
 	char	*str;
@@ -56,32 +65,34 @@ int	parse_config_line(t_config *conf, char *line)
 	if (!*str || *str == '\n' || is_empty_line(str))
 		return (1);
 	if (ft_strncmp(str, "NO ", 3) == 0)
-		return (parse_texture(str, &conf->no));
+		return (parse_texture(str, &conf->no_conf));
 	else if (ft_strncmp(str, "SO ", 3) == 0)
-		return (parse_texture(str, &conf->so));
+		return (parse_texture(str, &conf->so_conf));
 	else if (ft_strncmp(str, "WE ", 3) == 0)
-		return (parse_texture(str, &conf->we));
+		return (parse_texture(str, &conf->we_conf));
 	else if (ft_strncmp(str, "EA ", 3) == 0)
-		return (parse_texture(str, &conf->ea));
+		return (parse_texture(str, &conf->ea_conf));
 	else if (ft_strncmp(str, "F ", 2) == 0)
-		return (parse_color(str, &conf->floor));
+		return (parse_color(str, conf->f_rgb, &conf->f_count));
 	else if (ft_strncmp(str, "C ", 2) == 0)
-		return (parse_color(str, &conf->ceiling));
+		return (parse_color(str, conf->c_rgb, &conf->c_count));
 	else
 		return (0);
 }
 
-int	validate_config(t_config *config)
+int	validate_config(t_config *conf)
 {
-	if (!config->no || !config->so || !config->we || !config->ea)
+	// change to ERR_CONF
+	if (conf->c_count != 1 || conf->f_count != 1)
 		return (0);
-	if (config->floor.r == -1 || config->floor.g == -1 || config->floor.b == -1)
-        return (0);
-	if (config->ceiling.r == -1 || config->ceiling.g == -1 || config->ceiling.b == -1)
+	if (!conf->no_conf || !conf->so_conf || !conf->we_conf || !conf->ea_conf)
+		return (0);	
+	if (conf->f_rgb[0] == -1 || conf->f_rgb[1] == -1 || conf->f_rgb[2] == -1)
+		return (0);
+	if (conf->c_rgb[0] == -1 || conf->c_rgb[1] == -1 || conf->c_rgb[2] == -1)
 		return (0);
 	return (1);
 }
-
 
 int	parse_config_file(t_cub3d *cub, char **config)
 {
@@ -92,10 +103,11 @@ int	parse_config_file(t_cub3d *cub, char **config)
 	{
 		if (!parse_config_line(&cub->config, config[i]))
 		{
-			printf("Error\nInvalid line in config: %s\n", config[i]);
 			return (0);
 		}
 		i++;
 	}
+	if (!validate_config(&cub->config))// remove ! later.
+		return (0);
 	return (1);
 }

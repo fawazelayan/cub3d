@@ -6,13 +6,11 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:42:07 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/10/19 23:55:31 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/13 02:03:52 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "cub3d.h"
-
 
 void	printf_split(char **split)
 {
@@ -21,63 +19,60 @@ void	printf_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		printf("%s\n", split[i]);
+		printf("%s", split[i]);
 		i++;
 	}
 }
 
-void cleanup_all(char **file, char **config, char **map, t_cub3d *cub3d)
+int	main(int ac, char **av)
 {
-    free_2d(file);
-    free_2d(config);
-    free_2d(map);
-    free_config(&cub3d->config);
-    free_map(&cub3d->map);
-}
-int main(int argc, char **argv)
-{
-	t_cub3d cub3d;
-	char **file;
-	char **map;
-	char **config;
-	
-	if (!validation(argc, argv))
-		exit(EXIT_FAILURE);
-	file = store_file(argv[1]);
-	split_file(file, &config, &map);
-	init(&cub3d);
-	if (!parse_config_file(&cub3d, config))
+	t_cub3d	cub3d;
+	char	**config;
+	char	**map;
+
+	validate_program(ac, av[1]);
+	init_cub3d(&cub3d);
+	parse_file(&cub3d, av[1]);
+	split_file(cub3d.file, &config, &map);
+	clean_strs(cub3d.file);
+	cub3d.file = NULL;
+	if (!parse_config_file(&cub3d, config) || !validate_config(&cub3d.config))
 	{
-		free_2d(file);
-		free_2d(config);
-		free_2d(map);
-		free_config(&cub3d.config);
-		return (1);
+		clean_strs(config);
+		clean_strs(map);
+		clean_cub3d(&cub3d, ERR_COF);
 	}
-	if (!validate_config(&cub3d.config))
+	if (!parse_map(&cub3d, map))
 	{
-		printf("Error\nInvalid in config\n");
-		free_2d(file);
-		free_2d(config);
-		free_2d(map);
-		free_config(&cub3d.config);
-		return (1);
+		clean_strs(config);
+		clean_strs(map);
+		clean_cub3d(&cub3d, ERR_MAP);
 	}
-    if (!parse_map(&cub3d, map))
-    {
-        cleanup_all(file, config, map, &cub3d);
-        return (1);
-    }
-	//printf_split(cub3d.map.game_map);
-	//printf_split(map);
-	free_2d(file);
-	free_2d(config);
-	free_2d(map);
-	free_map(&cub3d.map);
-	free_config(&cub3d.config);
-	return(0);
+	//printf_split(config);
+	// printf("%s\n", cub3d.config.no_conf);
+	// printf("%s\n", cub3d.config.so_conf);
+	// printf("%s\n", cub3d.config.we_conf);
+	// printf("%s\n", cub3d.config.ea_conf);
+	// for(int i = 0; i < 3; i++)
+	// {
+	// 	printf("%d ", cub3d.config.c_rgb[i]);
+	// } 
+	// printf("\n");
+	// for(int i = 0; i < 3; i++)
+	// {
+	// 	printf("%d ", cub3d.config.f_rgb[i]);
+	// }
+	// start_game(&cub3d);
+	clean_strs(config);
+	clean_strs(map);
+	clean_cub3d(&cub3d, EXIT_SUCCESS);
+	return (0);
 }
-	
+
+
+
+
+
 
 
 // int main(int argc, char **argv)
