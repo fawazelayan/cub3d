@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 04:31:59 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/13 02:02:35 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/15 16:57:04 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int	parse_texture(char *line, char **texture)
 		free(path);
 		return (0);
 	}
+	line = skip_space(line);
+	if (*line && *line != '\n')
+	{
+		free(path);
+		return (0);
+	}
 	*texture = path;
 	return (1);
 }
@@ -64,17 +70,17 @@ int	parse_config_line(t_config *conf, char *line)
 	str = skip_space(line);
 	if (!*str || *str == '\n' || is_empty_line(str))
 		return (1);
-	if (ft_strncmp(str, "NO ", 3) == 0)
+	if (str[0] == 'N' && str[1] == 'O' && (str[2] == ' ' || str[2] == '\t'))
 		return (parse_texture(str, &conf->no_conf));
-	else if (ft_strncmp(str, "SO ", 3) == 0)
+	else if (str[0] == 'S' && str[1] == 'O' && (str[2] == ' ' || str[2] == '\t'))
 		return (parse_texture(str, &conf->so_conf));
-	else if (ft_strncmp(str, "WE ", 3) == 0)
+	else if (str[0] == 'W' && str[1] == 'E' && (str[2] == ' ' || str[2] == '\t'))
 		return (parse_texture(str, &conf->we_conf));
-	else if (ft_strncmp(str, "EA ", 3) == 0)
+	else if (str[0] == 'E' && str[1] == 'A' && (str[2] == ' ' || str[2] == '\t'))
 		return (parse_texture(str, &conf->ea_conf));
-	else if (ft_strncmp(str, "F ", 2) == 0)
+	else if (str[0] == 'F' && (str[1] == ' ' || str[1] == '\t'))
 		return (parse_color(str, conf->f_rgb, &conf->f_count));
-	else if (ft_strncmp(str, "C ", 2) == 0)
+	else if (str[0] == 'C' && (str[1] == ' ' || str[1] == '\t'))
 		return (parse_color(str, conf->c_rgb, &conf->c_count));
 	else
 		return (0);
