@@ -3,40 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/11/06 23:27:54 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:52:35 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-// # define ERR_MAP_MANYPLR		30
-// # define ERR_MAP_INVCHR		31
-// # define ERR_MAP_CLOSED		32
-// # define ERR_MAP_FIRST		33
-// # define ERR_MAP_SPLIT		34
-// # define ERR_MAP_NOPLR		35
-// # define ERR_MAP_SPACE		36
-// # define ERR_MAP_NONE		37
+# define ERR_CONFIG			30
+# define ERR_MAP			31
 
-# define ERR_MAP 30
-# define ERR_COF 77
 # define ERR_FILE_EMPTY		40
 # define ERR_FILE_LEN		41
 # define ERR_FILE_EXT		42
 # define ERR_SYS			43
 # define ERR_AC				44
 
+# define ERR_MLX_INIT		50
+# define ERR_MAIN_IMG_CRT	51
+# define ERR_NO_TEXTURE_LD	52
+# define ERR_SO_TEXTURE_LD	53
+# define ERR_WE_TEXTURE_LD	54
+# define ERR_EA_TEXTURE_LD	55
+
+
+# define FOV		0.66
+# define MOVE_SPEED 0.2
+# define ROT_SPEED	0.1
+# define WIN_HEIGHT	700
+# define WIN_WIDTH	900
+# define TILESIZE	32
+
 # define RED	"\033[0;31m"
 # define RST	"\033[0m"
-
-# define WIN_HEIGHT 700
-# define WIN_WIDTH 900
-# define TILESIZE 32
-# define FOV 0.6
 
 # include <sys/time.h>
 # include <stdlib.h>
@@ -49,7 +51,7 @@
 # include "libft.h"
 # include "MLX42.h"
 
-typedef struct s_textures	t_textures;
+typedef struct s_assets	t_assets;
 typedef struct s_config		t_config;
 typedef struct s_player		t_player;
 typedef struct s_cub3d		t_cub3d;
@@ -67,7 +69,7 @@ struct s_config
 	int		f_count;
 };
 
-struct s_textures
+struct s_assets
 {
 	mlx_texture_t	*no_tex;
 	mlx_texture_t	*so_tex;
@@ -79,13 +81,13 @@ struct s_textures
 
 struct s_player
 {
-	float	plane_x;
-	float	plane_y;
-	float	angle;
-	float	dirx;
-	float	diry;
-	float	px;
-	float	py;
+	double	plane_x;
+	double	plane_y;
+	double	dirx;
+	double	diry;
+	char	dir;
+	double	px;
+	double	py;
 };
 
 struct s_map
@@ -101,7 +103,7 @@ struct s_cub3d
 	char		**file;
 	t_config	config;
 	t_player	player;
-	t_textures	texs;
+	t_assets	ass;
 	t_map		map;
 	mlx_image_t	*img;
 	mlx_t		*mlx;
@@ -126,5 +128,6 @@ int		count_non_empty_file_lines(int err, char *filename);
 void	clean_strs(char **strs);
 void	free_map(t_map *map);
 void	clean_cub3d(t_cub3d *cub, int err);
+void	start_game(t_cub3d *cub);
 
 #endif

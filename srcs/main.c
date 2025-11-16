@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:42:07 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/13 02:03:52 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:48:25 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 	{
 		clean_strs(config);
 		clean_strs(map);
-		clean_cub3d(&cub3d, ERR_COF);
+		clean_cub3d(&cub3d, ERR_CONFIG);
 	}
 	if (!parse_map(&cub3d, map))
 	{
@@ -62,7 +62,7 @@ int	main(int ac, char **av)
 	// {
 	// 	printf("%d ", cub3d.config.f_rgb[i]);
 	// }
-	// start_game(&cub3d);
+	start_game(&cub3d);
 	clean_strs(config);
 	clean_strs(map);
 	clean_cub3d(&cub3d, EXIT_SUCCESS);

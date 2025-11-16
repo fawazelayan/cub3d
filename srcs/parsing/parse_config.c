@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_config.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 04:31:59 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/15 16:57:04 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:41:27 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	parse_config_line(t_config *conf, char *line)
 
 int	validate_config(t_config *conf)
 {
-	// change to ERR_CONF
+	// change to ERR_CONFIG
 	if (conf->c_count != 1 || conf->f_count != 1)
 		return (0);
 	if (!conf->no_conf || !conf->so_conf || !conf->we_conf || !conf->ea_conf)

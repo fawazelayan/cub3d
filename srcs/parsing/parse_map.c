@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 19:56:52 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/06 17:56:09 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/11/17 00:40:37 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ int	is_player_char(char p)
 	return (0);
 }
 
-float	player_angle_from_char(char c)
-{
-	if (c == 'N')
-		return (3 * M_PI / 2);
-	else if (c == 'S')
-		return (M_PI / 2);
-	else if (c == 'E')
-		return (0);
-	else if (c == 'W')
-		return (M_PI);
-	return (0);
-}
-
 static int	find_player(char **map, t_player *player)
 {
 	int	i;
@@ -56,9 +43,9 @@ static int	find_player(char **map, t_player *player)
 			if (is_player_char(map[i][j]))
 			{
 				flag++;
-				player->px = j + 0.5f;
-				player->py = i + 0.5f;
-				player->angle = player_angle_from_char(map[i][j]);
+				player->px = j + 0.5;
+				player->py = i + 0.5;
+				player->dir = map[i][j];
 			}
 			j++;
 		}
