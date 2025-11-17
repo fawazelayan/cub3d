@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 18:34:18 by felayan           #+#    #+#             */
-/*   Updated: 2025/11/17 01:00:09 by felayan          ###   ########.fr       */
+/*   Updated: 2025/11/17 13:33:36 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	init_mlx(t_cub3d *cub)
 	cub -> img = mlx_new_image(cub -> mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!cub -> img)
 		clean_cub3d(cub, ERR_MAIN_IMG_CRT);
+	mlx_image_to_window(cub -> mlx, cub -> img, 0, 0);
 	cub -> ass.no_tex = mlx_load_png(cub -> config.no_conf);
 	if (!cub -> ass.no_tex)
 		clean_cub3d(cub, ERR_NO_TEXTURE_LD);
@@ -61,15 +62,52 @@ static void	init_player(t_player *pl)
 	pl -> plane_x = -pl -> diry * FOV;
 	pl -> plane_y = pl -> dirx * FOV;
 }
+
 static void	end_game(void *param)
 {
 	t_cub3d *cub = param;
 	clean_cub3d(cub, EXIT_SUCCESS);
 }
+
+void	update_game(void *param)
+{
+	t_cub3d	*cub = param;
+
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_W))
+		move_forward(cub);
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_A))
+		move_left(cub);
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_S))
+		move_backward(cub);
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_D))
+		move_right(cub);
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_LEFT))
+		rotate_left(cub);
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_RIGHT))
+		rotate_right(cub);
+	render_floor_ceil(cub);
+	render_rays(cub);
+	mlx_image_to_window(cub -> mlx, cub -> img, 0, 0);
+}
+
+void	esc_press(mlx_key_data_t keydata, void *param)
+{
+	t_cub3d	*cub = param;
+
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		clean_cub3d(cub, EXIT_SUCCESS);
+}
+static void	hooks_setup(t_cub3d *cub)
+{
+	mlx_close_hook(cub -> mlx, end_game, cub);
+	mlx_key_hook(cub -> mlx, esc_press, cub);
+	mlx_loop_hook(cub -> mlx, update_game, cub);
+}
+
 void	start_game(t_cub3d *cub)
 {
 	init_mlx(cub);
 	init_player(&cub -> player);
-	mlx_close_hook(cub -> mlx, end_game, cub);
+	hooks_setup(cub);
 	mlx_loop(cub -> mlx);
 }
