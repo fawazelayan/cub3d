@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 18:15:54 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/02 16:24:21 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 17:20:56 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,65 @@ int	count_non_empty_file_lines(int err, char *filename)
 	if (false_map)
 		print_err_and_exit(ERR_MAP);
 	return (count);
+}
+
+char	*trim_newline(char *str)
+{
+	int	l;
+
+	if (!str)
+		return (NULL);
+	l = ft_strlen(str);
+	if (l > 0 && str[l - 1] == '\n')
+		str[l - 1] = '\0';
+	return (str);
+}
+
+int	find_map_start(char **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (is_map(file[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	count_lines(char **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+		i++;
+	return (i);
+}
+
+int	is_map(char *line)
+{
+	int	i;
+	int	flag;
+
+	line = skip_space(line);
+	if (!*line)
+		return (0);
+	if (*line == '1' || *line == '0')
+	{
+		i = 0;
+		flag = 0;
+		while (line[i])
+		{
+			if (line[i] == '1')
+				flag = 1;
+			if (!ft_strchr(" 01NSEW\n\t", line[i]))
+				return (0);
+			i++;
+		}
+		return (flag);
+	}
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 19:56:52 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/17 00:40:37 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 18:07:52 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ int	parse_map(t_cub3d *cub3d, char **temp_map)
 		height++;
 	width = max_width(temp_map);
 	rect_map = make_rectangle(temp_map, width, height);
+	printf_split(rect_map);
 	if (!rect_map)
 	{
 		printf("Error\nMemory allocation failed\n");
@@ -233,15 +234,4 @@ int	parse_map(t_cub3d *cub3d, char **temp_map)
 	cub3d->map.width = width;
 	cub3d->map.height = height;
 	return (1);
-}
-
-void	free_map(t_map *map)
-{
-	if (!map)
-		return ;
-	if (map->grid)
-		clean_strs(map->grid);
-	map->grid = NULL;
-	map->width = 0;
-	map->height = 0;
 }

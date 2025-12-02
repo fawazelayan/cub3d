@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:42:07 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/02 16:36:34 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 17:53:01 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	printf_split(char **split)
 	i = 0;
 	while (split[i])
 	{
-		printf("%s", split[i]);
+		printf("%s\n", split[i]);
 		i++;
 	}
 }
@@ -33,9 +33,7 @@ int	main(int ac, char **av)
 	validate_program(ac, av[1]);
 	init_cub3d(&cub3d);
 	parse_file(&cub3d, av[1]);
-	split_file(cub3d.file, &config, &map);
-	clean_strs(cub3d.file);
-	cub3d.file = NULL;
+	split_file(&cub3d, &config, &map);
 	if (!parse_config_file(&cub3d, config) || !validate_config(&cub3d.config))
 	{
 		clean_strs(config);

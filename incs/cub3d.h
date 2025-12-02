@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/12/01 18:09:26 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 17:52:28 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,12 @@ struct s_cub3d
 void	init_cub3d(t_cub3d *cub);
 
 void	parse_file(t_cub3d *cub, char *filename);
-void	split_file(char **file, char ***config, char ***map);
-
+void	split_file(t_cub3d *cub3d, char ***config, char ***map);
+char	*trim_newline(char *str);
+int 	find_map_start(char **file);
+int		count_lines(char **file);
+int		is_map(char *line);
+void	printf_split(char **split);
 
 int	parse_color(char *line, int *rgb, int *count);
 int	validate_config(t_config *config);

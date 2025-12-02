@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_config.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 04:31:59 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/17 00:41:27 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 17:50:24 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ int	parse_config_file(t_cub3d *cub, char **config)
 	while (config[i])
 	{
 		if (!parse_config_line(&cub->config, config[i]))
-		{
 			return (0);
-		}
 		i++;
 	}
 	if (!validate_config(&cub->config))// remove ! later.
