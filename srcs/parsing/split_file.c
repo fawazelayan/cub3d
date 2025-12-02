@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 03:47:14 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/06 18:02:20 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/02 16:35:39 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ char	**copy(char **src, int start, int end)
 
 void	split_file(char **file, char ***config, char ***map)
 {
-	int	i;
 	int	map_start;
 	int	count;
+	int	i;
 
 	i = 0;
 	count = 0;
@@ -99,12 +99,12 @@ void	split_file(char **file, char ***config, char ***map)
 	}
 	if (map_start == -1)
 	{
-		clean_strs(file);
+		clean_strs(file); //clean_cub3d(cub, err_map)
 		print_err_and_exit(ERR_MAP);
 	}
 	while (file[count])
 		count++;
-	*config = copy(file, 0, map_start);
+	*config = copy(file, 0, map_start);   // send cub3d, clean_strs(dest) clean_cub3d  send config as param
 	if (!*config)
 	{
 		clean_strs(file);

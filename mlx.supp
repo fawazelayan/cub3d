@@ -1,0 +1,66 @@
+# MLX42 / GLFW Suppressions
+
+{
+   ignore_mlx_init_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:mlx_init
+}
+
+{
+   ignore_glfw_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libglfw.so*
+}
+
+{
+   ignore_x11_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   ignore_gl_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libGL.so*
+   ...
+}
+
+{
+   ignore_glx_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libGLX.so*
+}
+
+{
+   ignore_dri_drivers
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/dri/*
+}
+
+{
+   ignore_loader_dlopen
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_open
+}
+
+{
+   ignore_llvm_pipe
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libLLVM*
+}

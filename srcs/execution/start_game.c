@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 18:34:18 by felayan           #+#    #+#             */
-/*   Updated: 2025/11/17 13:33:36 by felayan          ###   ########.fr       */
+/*   Updated: 2025/11/30 00:34:17 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	update_game(void *param)
 {
 	t_cub3d	*cub = param;
 
-	if (mlx_is_key_down(cub -> mlx, MLX_KEY_W))
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_W) || mlx_is_key_down(cub -> mlx, MLX_KEY_UP))
 		move_forward(cub);
 	if (mlx_is_key_down(cub -> mlx, MLX_KEY_A))
 		move_left(cub);
-	if (mlx_is_key_down(cub -> mlx, MLX_KEY_S))
+	if (mlx_is_key_down(cub -> mlx, MLX_KEY_S) || mlx_is_key_down(cub -> mlx, MLX_KEY_DOWN))
 		move_backward(cub);
 	if (mlx_is_key_down(cub -> mlx, MLX_KEY_D))
 		move_right(cub);
@@ -87,7 +87,6 @@ void	update_game(void *param)
 		rotate_right(cub);
 	render_floor_ceil(cub);
 	render_rays(cub);
-	mlx_image_to_window(cub -> mlx, cub -> img, 0, 0);
 }
 
 void	esc_press(mlx_key_data_t keydata, void *param)
@@ -108,6 +107,8 @@ void	start_game(t_cub3d *cub)
 {
 	init_mlx(cub);
 	init_player(&cub -> player);
+	cub -> ass.f_color = (cub->config.f_rgb[0] << 24 | cub->config.f_rgb[1] << 16 | cub->config.f_rgb[2] << 8 | 255);
+	cub -> ass.c_color = (cub->config.c_rgb[0] << 24 | cub->config.c_rgb[1] << 16 | cub->config.c_rgb[2] << 8 | 255);
 	hooks_setup(cub);
 	mlx_loop(cub -> mlx);
 }

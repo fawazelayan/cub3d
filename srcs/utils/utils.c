@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 18:15:54 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/15 19:10:38 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 16:24:21 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	print_err_and_exit(int err)
 	else if (err == ERR_SYS)
 	{
 		ft_putstr_fd(RED"\nError\n", 2);
-		perror("program");
+		perror("cub3D");
 		ft_putstr_fd("\n"RST, 2);
 	}
 	else if (err == ERR_MAP)

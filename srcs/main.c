@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:42:07 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/17 00:48:25 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/02 16:36:34 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	printf_split(char **split)
 
 int	main(int ac, char **av)
 {
-	t_cub3d	cub3d;
 	char	**config;
 	char	**map;
+	t_cub3d	cub3d;
 
 	validate_program(ac, av[1]);
 	init_cub3d(&cub3d);
@@ -48,20 +48,6 @@ int	main(int ac, char **av)
 		clean_strs(map);
 		clean_cub3d(&cub3d, ERR_MAP);
 	}
-	//printf_split(config);
-	// printf("%s\n", cub3d.config.no_conf);
-	// printf("%s\n", cub3d.config.so_conf);
-	// printf("%s\n", cub3d.config.we_conf);
-	// printf("%s\n", cub3d.config.ea_conf);
-	// for(int i = 0; i < 3; i++)
-	// {
-	// 	printf("%d ", cub3d.config.c_rgb[i]);
-	// } 
-	// printf("\n");
-	// for(int i = 0; i < 3; i++)
-	// {
-	// 	printf("%d ", cub3d.config.f_rgb[i]);
-	// }
 	start_game(&cub3d);
 	clean_strs(config);
 	clean_strs(map);

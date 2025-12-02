@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/11/17 00:52:35 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/01 18:09:26 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,15 @@
 # define ERR_EA_TEXTURE_LD	55
 
 
-# define FOV		0.66
-# define MOVE_SPEED 0.2
-# define ROT_SPEED	0.1
-# define WIN_HEIGHT	700
-# define WIN_WIDTH	900
-# define TILESIZE	32
+# define WE				0
+# define NS				1
+# define FOV			0.66
+# define MOVE_SPEED		0.02
+# define SPRINT_SPEED	0.05
+# define ROT_SPEED		0.05
+# define WIN_HEIGHT		700
+# define WIN_WIDTH		1000
+// # define TILESIZE	32
 
 # define RED	"\033[0;31m"
 # define RST	"\033[0m"
@@ -56,6 +59,7 @@ typedef struct s_config		t_config;
 typedef struct s_player		t_player;
 typedef struct s_cub3d		t_cub3d;
 typedef struct s_map		t_map;
+typedef struct s_ray		t_ray;
 
 struct s_config
 {
@@ -67,6 +71,24 @@ struct s_config
 	int		c_rgb[3];
 	int		c_count;
 	int		f_count;
+};
+
+struct s_ray
+{
+	double	camera_x; // Represents the x position of the pixels on the plane (-1, 1)
+	double	ray_x;	// X pos of ray
+	double	ray_y;	// Y pos of ray
+	int		map_x;	// Which square the ray is in X
+	int		map_y;	// same as above but Y
+	double	deltaX;
+	double	deltaY;
+	int		stepX;
+	int		stepY;
+	double	sideX;
+	double	sideY;
+	bool	hit;
+	int		side;
+	double	wallDist;
 };
 
 struct s_assets
@@ -88,6 +110,7 @@ struct s_player
 	char	dir;
 	double	px;
 	double	py;
+	double	move_speed;
 };
 
 struct s_map
@@ -105,6 +128,7 @@ struct s_cub3d
 	t_player	player;
 	t_assets	ass;
 	t_map		map;
+	t_ray		ray;
 	mlx_image_t	*img;
 	mlx_t		*mlx;
 };
@@ -129,5 +153,13 @@ void	clean_strs(char **strs);
 void	free_map(t_map *map);
 void	clean_cub3d(t_cub3d *cub, int err);
 void	start_game(t_cub3d *cub);
+void	render_floor_ceil(t_cub3d *cub);
+void	render_rays(t_cub3d *cub);
+void	rotate_right(t_cub3d *cub);
+void	move_forward(t_cub3d *cub);
+void	move_backward(t_cub3d *cub);
+void	move_right(t_cub3d *cub);
+void	move_left(t_cub3d *cub);
+void	rotate_left(t_cub3d *cub);
 
 #endif
