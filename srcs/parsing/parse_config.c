@@ -6,55 +6,31 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 04:31:59 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/02 17:50:24 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/03 02:39:09 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	check_texture_file(char *path)
-{
-	int	fd;
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	close(fd);
-	return (1);
-}
-
 int	parse_texture(char *line, char **texture)
 {
 	char	*path;
-	char	*start;
-	int		len;
 
-	len = 0;
 	if (*texture != NULL)
 		return (0);
 	line += 2;
 	line = skip_space(line);
 	if (!*line || *line == '\n')
 		return (0);
-	start = line;
-	while (*line && *line != ' ' && *line != '\t' && *line != '\n')
-		line++;
-	path = ft_substr(start, 0, line - start);
-	if (!path)
+	if (!extract_path(line, &path))
 		return (0);
-	len = ft_strlen(path);
-	if (len < 4 || ft_strcmp(path + len - 4, ".png"))
+	if (!validate_path(path))
 	{
 		free(path);
 		return (0);
 	}
-	if (!check_texture_file(path))
-	{
-		free(path);
-		return (0);
-	}
-	line = skip_space(line);
-	if (*line && *line != '\n')
+	line += ft_strlen(path);
+	if (has_trailing_garbage(line))
 	{
 		free(path);
 		return (0);

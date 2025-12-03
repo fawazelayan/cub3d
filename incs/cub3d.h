@@ -6,7 +6,7 @@
 /*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/12/02 17:52:28 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/03 19:34:49 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,21 @@ void	printf_split(char **split);
 int	parse_color(char *line, int *rgb, int *count);
 int	validate_config(t_config *config);
 int	parse_config_file(t_cub3d *cub, char **config);
-
+int	has_trailing_garbage(char *line);
+int	extract_path(char *start, char **path);
+int	has_valid_extension(char *path);
+int	check_texture_file(char *path);
+int	validate_path(char *path);
 int	parse_map(t_cub3d *cub3d, char **temp_map);
+int	is_valid_char(char m);
+int	is_player_char(char p);
+int	max_width(char **map);
+char	**make_rectangle(char **map, int width, int height);
+void	free_visited(int **visited, int height);
+int	check_walls(char **map, int width, int height, t_player *player);
+int	flood_check(char **map, int x, int y, int width, int height, int **visited);
+void	free_visited(int **visited, int height);
+int	**alloc_visited(int width, int height);
 char *skip_space(char *str);
 bool	is_empty_line(char *line);
 void	print_err_and_exit(int err);
