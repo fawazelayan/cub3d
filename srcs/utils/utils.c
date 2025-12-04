@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 18:15:54 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/03 02:38:10 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/05 00:16:46 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	print_err_and_exit(int err)
 		ft_putstr_fd(RED"\nError\nInvalid map\n\n", 2);
 	else if (err == ERR_CONFIG)
 		ft_putstr_fd(RED"\nError\nInvalid Config\n\n", 2);
-	else if (err == ERR_MLX_INIT)
-		ft_putstr_fd(RED"\nError\nMLX init failure\n\n", 2);
-	else if (err == ERR_MAIN_IMG_CRT)
-		ft_putstr_fd(RED"\nError\nMLX main image failure\n\n", 2);
+	else if (err == ERR_MLX)
+		ft_putstr_fd(RED"\nError\nMLX failure\n\n", 2);
 	exit(err);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_config_color.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 06:50:09 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/03 03:05:37 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/05 02:39:55 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	check_split_validity(char **clr)
 	}
 	return (1);
 }
+
 int	check_rgb_values(int r, int g, int b, char **clr)
 {
 	if (r == -1 || g == -1 || b == -1)
@@ -55,6 +56,7 @@ int	check_rgb_values(int r, int g, int b, char **clr)
 	}
 	return (1);
 }
+
 int	check_comma(char *line, char **clr)
 {
 	int	len;
@@ -69,6 +71,7 @@ int	check_comma(char *line, char **clr)
 	}
 	return (1);
 }
+
 int	parse_color(char *line, int *rgb, int *count)
 {
 	char	**clr;
@@ -95,5 +98,3 @@ int	parse_color(char *line, int *rgb, int *count)
 	clean_strs(clr);
 	return (1);
 }
-
-

@@ -26,89 +26,36 @@ uint32_t apply_fog(uint32_t color, double distance)
     return (r << 24) | (g << 16) | (b << 8) | a;
 }
 
-// void	render_floor_ceil(t_cub3d *cub)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (i < WIN_HEIGHT / 2)
-// 	{
-// 		j = 0;
-// 		while (j < WIN_WIDTH )
-// 		{
-// 			mlx_put_pixel(cub -> img, j, i, cub -> ass.c_color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	while (i < WIN_HEIGHT)
-// 	{
-// 		j = 0;
-// 		while (j < WIN_WIDTH )
-// 		{
-// 			mlx_put_pixel(cub -> img, j, i, cub -> ass.f_color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-void render_floor_ceil(t_cub3d *cub)
+void	render_floor_ceil(mlx_image_t *img, t_assets *ass)
 {
-    int y;
-    int x;
+	int	i;
+	int	j;
 
-    // --- CEILING (Top Half) ---
-    y = 0;
-    while (y < WIN_HEIGHT / 2)
-    {
-        // 1. Calculate distance based on how "high" we are
-        // (WIN_HEIGHT / 2) - y  is the distance from the horizon line
-        double dist = (WIN_HEIGHT / 2.0) / ((WIN_HEIGHT / 2.0) - y);
-        
-        // 2. Calculate the color ONCE for the whole row
-        uint32_t foggy_color = apply_fog(cub->ass.c_color, dist);
-
-        // 3. Draw the row
-        x = 0;
-        while (x < WIN_WIDTH)
-        {
-            mlx_put_pixel(cub->img, x, y, foggy_color);
-            x++;
-        }
-        y++;
-    }
-
-    // --- FLOOR (Bottom Half) ---
-    y = WIN_HEIGHT / 2;
-    while (y < WIN_HEIGHT)
-    {
-        // 1. Calculate distance based on how "low" we are
-        // y - (WIN_HEIGHT / 2) is the distance from the horizon line
-        double row_pos = y - (WIN_HEIGHT / 2.0);
-        
-        // Avoid division by zero at the exact center line
-        if (row_pos == 0) row_pos = 1.0; 
-        
-        double dist = (WIN_HEIGHT / 2.0) / row_pos;
-
-        // 2. Calculate the color ONCE
-        uint32_t foggy_color = apply_fog(cub->ass.f_color, dist);
-
-        // 3. Draw the row
-        x = 0;
-        while (x < WIN_WIDTH)
-        {
-            mlx_put_pixel(cub->img, x, y, foggy_color);
-            x++;
-        }
-        y++;
-    }
+	i = 0;
+	j = 0;
+	while (i < WIN_HEIGHT / 2)
+	{
+		j = 0;
+		while (j < WIN_WIDTH )
+		{
+			mlx_put_pixel(img, j, i, ass -> c_color);
+			j++;
+		}
+		i++;
+	}
+	while (i < WIN_HEIGHT)
+	{
+		j = 0;
+		while (j < WIN_WIDTH )
+		{
+			mlx_put_pixel(img, j, i, ass -> f_color);
+			j++;
+		}
+		i++;
+	}
 }
 
-static uint32_t get_texture_pixel(mlx_texture_t *tex, int x, int y, double wallDist)
+static uint32_t get_texture_pixel(mlx_texture_t *tex, int x, int y, double wall_dist)
 {
     // 1. Safety Check: If coordinates are out of bounds, return Black or Error color
     if (x < 0 || x >= (int)tex->width || y < 0 || y >= (int)tex->height)
@@ -128,7 +75,7 @@ static uint32_t get_texture_pixel(mlx_texture_t *tex, int x, int y, double wallD
 	uint32_t color = (r << 24) | (g << 16) | (b << 8) | a;
     // 4. Combine them into one 32-bit integer (0xRRGGBBAA)
     // We shift Red to the far left, then Green, then Blue, then Alpha at the end.
-    return apply_fog(color, wallDist);
+    return apply_fog(color, wall_dist);
 }
 void	render_rays(t_cub3d *cub)
 {
@@ -140,126 +87,43 @@ void	render_rays(t_cub3d *cub)
 		// Calculate Ray dir and map pixels to camera_x
 
 		cub -> ray.camera_x = (2 * i / (double)WIN_WIDTH) - 1;
-		cub -> ray.ray_x = cub -> player.dirx + (cub -> player.plane_x * cub->ray.camera_x);
-		cub -> ray.ray_y = cub -> player.diry + (cub -> player.plane_y * cub->ray.camera_x);
-		cub -> ray.map_x = (int)cub -> player.px;
-		cub -> ray.map_y = (int)cub -> player.py;
+		cub -> ray.raydirx = cub -> player.dirx + (cub -> player.planex * cub->ray.camera_x);
+		cub -> ray.raydiry = cub -> player.diry + (cub -> player.planey * cub->ray.camera_x);
+		cub -> ray.mapx = (int)cub -> player.px;
+		cub -> ray.mapy = (int)cub -> player.py;
 
-		// Calculate DELTA DIST
-		if (!cub -> ray.ray_x)
-			cub -> ray.deltaX = 1e30;
-		else
-			cub -> ray.deltaX = fabs(1/cub -> ray.ray_x);
-		if (!cub -> ray.ray_y)
-			cub -> ray.deltaY = 1e30;
-		else
-			cub -> ray.deltaY = fabs(1/cub -> ray.ray_y);
-
-		// Calculate steps and side Dist
-		if (cub -> ray.ray_x < 0)
-		{
-			cub -> ray.stepX = -1;
-			cub -> ray.sideX = (cub -> player.px - cub -> ray.map_x) * cub -> ray.deltaX;
-		}
-		else
-		{
-			cub -> ray.stepX = 1;
-			cub -> ray.sideX = (cub -> ray.map_x + 1 - cub -> player.px) * cub -> ray.deltaX;
-		}
-		if (cub -> ray.ray_y < 0)
-		{
-			cub -> ray.stepY = -1;
-			cub -> ray.sideY = (cub -> player.py - cub -> ray.map_y) * cub -> ray.deltaY;
-		}
-		else
-		{
-			cub -> ray.stepY = 1;
-			cub -> ray.sideY = (cub -> ray.map_y + 1 - cub -> player.py) * cub -> ray.deltaY;
-		}
-
-		// Increament steps till a wall hit
-		cub -> ray.hit = false;
-		while (!cub -> ray.hit)
-		{
-			if (cub -> ray.sideX < cub -> ray.sideY)
-			{
-				cub -> ray.sideX += cub -> ray.deltaX;
-				cub -> ray.map_x += cub -> ray.stepX;
-				cub -> ray.side = WE;
-			}
-			else
-			{
-				cub -> ray.sideY += cub -> ray.deltaY;
-				cub -> ray.map_y += cub -> ray.stepY;
-				cub -> ray.side = NS;
-			}
-			if (cub -> map.grid[cub -> ray.map_y][cub -> ray.map_x] == '1')
-				cub -> ray.hit = true;
-		}
-
-		// Calculate wall distance
-		if (cub -> ray.side == WE)
-			cub -> ray.wallDist = cub -> ray.sideX - cub -> ray.deltaX;
-		else
-			cub -> ray.wallDist = cub -> ray.sideY - cub -> ray.deltaY;
-
-		// Calculate wall height (how many pixels)
-		int wallHeight = (int)(WIN_HEIGHT/ cub -> ray.wallDist);
-
-		// Calculate draw start and end for the wall
-		int	drawStart = WIN_HEIGHT / 2 - wallHeight / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		int drawEnd = WIN_HEIGHT / 2 + wallHeight / 2;
-		if (drawEnd >= WIN_HEIGHT)
-			drawEnd = WIN_HEIGHT - 1;
-
-		// Load the right texture for dir
-		mlx_texture_t *tex;
-		if (cub -> ray.side == WE)
-		{
-			if (cub -> ray.ray_x < 0)
-				tex = cub -> ass.ea_tex;
-			else
-				tex = cub -> ass.we_tex;
-		}
-		else
-		{
-			if (cub -> ray.ray_y < 0)
-				tex = cub -> ass.so_tex;
-			else
-				tex = cub -> ass.no_tex;
-		}
-
+		calculate_dist(&cub -> ray, &cub -> player);
+		perform_dda(&cub -> ray, &cub -> map);
+		get_texture(&cub -> ray, &cub -> render, &cub -> ass);
 		// Calculate hit point
 		double wallX;
 		if (cub -> ray.side == WE)
-			wallX = cub -> player.py + cub -> ray.wallDist * cub -> ray.ray_y;
+			wallX = cub -> player.py + cub -> ray.wall_dist * cub -> ray.raydiry;
 		else
-			wallX = cub -> player.px + cub -> ray.wallDist * cub -> ray.ray_x;
+			wallX = cub -> player.px + cub -> ray.wall_dist * cub -> ray.raydirx;
 		wallX -= floor(wallX);
 
 		double texX;
-		texX = (int)(wallX * (double)tex -> width);
+		texX = (int)(wallX * (double)cub -> render.tex -> width);
 		// 2. Fix the Mirror Effect
 		// If hitting a side where coordinates run backwards, flip x.
-		if ((cub->ray.side == WE && cub->ray.ray_x > 0))// East Face
-			texX = tex -> width - texX - 1;
-		if (cub -> ray.side == NS && cub -> ray.ray_y < 0)
-			texX = tex -> width - texX - 1;
-		double step = 1.0 * tex -> height / wallHeight;
-		double texPos = (drawStart - WIN_HEIGHT / 2 + wallHeight / 2) * step;
+		if ((cub->ray.side == WE && cub->ray.raydirx > 0))// East Face
+			texX = cub -> render.tex -> width - texX - 1;
+		if (cub -> ray.side == NS && cub -> ray.raydiry < 0)
+			texX = cub -> render.tex -> width - texX - 1;
+		double step = 1.0 * cub -> render.tex -> height / cub -> render.wall_height;
+		double texPos = (cub -> render.draw_start - WIN_HEIGHT / 2 + cub -> render.wall_height / 2) * step;
 
 		// 5. The Drawing Loop
-		int y = drawStart;
-		while (y <= drawEnd)
+		int y = cub -> render.draw_start;
+		while (y <= cub -> render.draw_end)
 		{
     		// Get the integer Y position on the texture
-    		int texY = (int)texPos & (tex->height - 1); // The & prevents overflow errors
+    		int texY = (int)texPos & (cub -> render.tex->height - 1); // The & prevents overflow errors
     		texPos += step;
 
  		   // Get the color from the texture at [texY][texX]
-    		uint32_t color = get_texture_pixel(tex, texX, texY, cub -> ray.wallDist);
+    		uint32_t color = get_texture_pixel(cub -> render.tex, texX, texY, cub -> ray.wall_dist);
 
    			 // Draw it!
    			 mlx_put_pixel(cub->img, i, y, color);

@@ -117,27 +117,27 @@ void hook(void *param) {
         int mapY = (int)g->posY;
 
         double sideDistX, sideDistY;
-        double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-        double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+        double dltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+        double dltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
         double perpWallDist;
 
-        int stepX, stepY;
+        int stepx, stepy;
         int hit = 0, side;
 
-        if (rayDirX < 0) { stepX = -1; sideDistX = (g->posX - mapX) * deltaDistX; }
-        else { stepX = 1; sideDistX = (mapX + 1.0 - g->posX) * deltaDistX; }
-        if (rayDirY < 0) { stepY = -1; sideDistY = (g->posY - mapY) * deltaDistY; }
-        else { stepY = 1; sideDistY = (mapY + 1.0 - g->posY) * deltaDistY; }
+        if (rayDirX < 0) { stepx = -1; sideDistX = (g->posX - mapX) * dltaDistX; }
+        else { stepx = 1; sideDistX = (mapX + 1.0 - g->posX) * dltaDistX; }
+        if (rayDirY < 0) { stepy = -1; sideDistY = (g->posY - mapY) * dltaDistY; }
+        else { stepy = 1; sideDistY = (mapY + 1.0 - g->posY) * dltaDistY; }
 
         while (hit == 0) {
-            if (sideDistX < sideDistY) { sideDistX += deltaDistX; mapX += stepX; side = 0; }
-            else { sideDistY += deltaDistY; mapY += stepY; side = 1; }
+            if (sideDistX < sideDistY) { sideDistX += dltaDistX; mapX += stepx; side = 0; }
+            else { sideDistY += dltaDistY; mapY += stepy; side = 1; }
             // Check for wall '1'
             if (worldMap[mapX][mapY] == '1') hit = 1;
         }
 
-        if (side == 0) perpWallDist = (sideDistX - deltaDistX);
-        else perpWallDist = (sideDistY - deltaDistY);
+        if (side == 0) perpWallDist = (sideDistX - dltaDistX);
+        else perpWallDist = (sideDistY - dltaDistY);
 
         int lineHeight = (int)(HEIGHT / perpWallDist);
         int drawStart = -lineHeight / 2 + HEIGHT / 2;

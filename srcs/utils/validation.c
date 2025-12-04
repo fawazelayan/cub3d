@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 18:15:56 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/11/06 17:53:29 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/05 02:08:11 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ void	validate_program(int ac, char *filename)
 	if (close(fd) < 0 || bytes < 0)
 		print_err_and_exit(ERR_SYS);
 }
-

@@ -15,7 +15,7 @@ RESET	=	\033[0m
 #  ========================  #
 #	    FILE STRUCTURE		 #
 #  ========================  #
-NAME		=	cub3d
+NAME		=	cub3D
 
 LIB			=	lib
 MLX_DIR		=	MLX42
