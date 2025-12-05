@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 15:52:30 by felayan           #+#    #+#             */
-/*   Updated: 2025/12/05 02:42:41 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/05 04:54:50 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_render		t_render;
 typedef struct s_cub3d		t_cub3d;
 typedef struct s_map		t_map;
 typedef struct s_ray		t_ray;
+typedef struct s_flood		t_flood;
 
 struct s_config
 {
@@ -124,6 +125,14 @@ struct s_map
 	char	**grid;
 };
 
+struct s_flood
+{
+	char	**map;
+	int		width;
+	int		height;
+	int		**visited;
+};
+
 struct s_cub3d
 {
 	t_config	config;
@@ -163,7 +172,10 @@ int			max_width(char **map);
 char		**make_rectangle(char **map, int width, int height);
 void		free_visited(int **visited, int height);
 int			check_walls(char **map, int width, int height, t_player *player);
-int			flood_check(char **map, int x, int y, int width, int height, int **visited);
+int			flood_check(int x, int y, t_flood *flood);
+bool		is_map_line(const char *line);
+void		free_partial(char **rect, int i);
+void		fill_row(char *dst, char *src, int width);
 void		free_visited(int **visited, int height);
 int			**alloc_visited(int width, int height);
 char		*skip_space(char *str);

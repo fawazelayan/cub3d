@@ -1,66 +1,17 @@
-# MLX42 / GLFW Suppressions
-
+# Suppress errors related to uninitialized memory from X11/XCB
+## 'Syscall param writev(vector[0]) points to uninitialised byte(s)'
 {
-   ignore_mlx_init_leaks
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   fun:mlx_init
-}
-
-{
-   ignore_glfw_leaks
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   obj:*/libglfw.so*
-}
-
-{
-   ignore_x11_leaks
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   obj:*/libX11.so*
-}
-
-{
-   ignore_gl_leaks
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   obj:*/libGL.so*
-   ...
-}
-
-{
-   ignore_glx_leaks
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   obj:*/libGLX.so*
-}
-
-{
-   ignore_dri_drivers
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   obj:*/dri/*
-}
-
-{
-   ignore_loader_dlopen
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   ...
-   fun:_dl_open
-}
-
-{
-   ignore_llvm_pipe
-   Memcheck:Leak
-   match-leak-kinds: all
-   ...
-   obj:*/libLLVM*
+	xcb_writev_specific
+	Memcheck:Param
+	writev(vector[0])
+	fun:writev
+	obj:*/libxcb.so*
+	obj:*/libxcb.so*
+	fun:xcb_writev
+	fun:_XSend
+	fun:_XReadEvents
+	fun:XWindowEvent
+	fun:mlx_int_wait_first_expose
+	fun:mlx_new_window
+	...
 }

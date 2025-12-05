@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   split_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 03:47:14 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/04 19:54:53 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/05 05:07:34 by aalquraa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	count_lines(char **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+		i++;
+	return (i);
+}
 
 char	**copy(char **src, int start, int end)
 {
