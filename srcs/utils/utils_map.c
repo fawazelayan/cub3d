@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 18:05:16 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/05 04:58:44 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/06 14:05:59 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	flood_check(int x, int y, t_flood *flood)
 	return (1);
 }
 
-int	check_walls(char **map, int width, int height, t_player *player)
+int	check_walls(char **map, int width, int height, t_player *pl)
 {
 	int		**visited;
 	int		result;
@@ -78,7 +78,7 @@ int	check_walls(char **map, int width, int height, t_player *player)
 	flood.width = width;
 	flood.height = height;
 	flood.visited = visited;
-	result = flood_check((int)player->px, (int)player->py, &flood);
+	result = flood_check((int)pl->px, (int)pl->py, &flood);
 	free_visited(visited, height);
 	return (result);
 }

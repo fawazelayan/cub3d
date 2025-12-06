@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalquraa <aalquraa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 19:56:52 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/03 19:33:09 by aalquraa         ###   ########.fr       */
+/*   Updated: 2025/12/06 14:05:59 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	find_player(char **map, t_player *player)
+int	find_player(char **map, t_player *pl)
 {
 	int	i;
 	int	j;
@@ -28,9 +28,9 @@ int	find_player(char **map, t_player *player)
 			if (is_player_char(map[i][j]))
 			{
 				flag++;
-				player->px = j + 0.5;
-				player->py = i + 0.5;
-				player->dir = map[i][j];
+				pl->px = j + 0.5;
+				pl->py = i + 0.5;
+				pl->dir = map[i][j];
 			}
 			j++;
 		}
@@ -105,14 +105,14 @@ int	parse_map(t_cub3d *cub3d, char **temp_map)
 		return (0);
 	if (!validate_map_chars(temp_map))
 		return (0);
-	if (!find_player(temp_map, &cub3d->player))
+	if (!find_player(temp_map, &cub3d->pl))
 		return (0);
 	height = get_height(temp_map);
 	width = max_width(temp_map);
 	rect = make_rectangle(temp_map, width, height);
 	if (!rect)
 		return (0);
-	if (!check_walls(rect, width, height, &cub3d->player))
+	if (!check_walls(rect, width, height, &cub3d->pl))
 	{
 		clean_strs(rect);
 		return (0);

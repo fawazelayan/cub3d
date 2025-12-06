@@ -6,7 +6,7 @@
 /*   By: felayan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 18:16:10 by aalquraa          #+#    #+#             */
-/*   Updated: 2025/12/05 02:06:17 by felayan          ###   ########.fr       */
+/*   Updated: 2025/12/06 14:05:59 by felayan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	init_cub3d(t_cub3d *cub)
 		cub -> config.c_rgb[i] = -1;
 		i++;
 	}
-	cub -> player.px = -1;
-	cub -> player.py = -1;
+	cub -> pl.px = -1;
+	cub -> pl.py = -1;
 }
 
 void	init_mlx(t_cub3d *cub)
 {
-	cub -> mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "IDK GAME", false);
+	cub -> mlx = mlx_init(WIDTH, HEIGHT, "IDK GAME", false);
 	if (!cub -> mlx)
 		clean_cub3d(cub, ERR_MLX);
-	cub -> img = mlx_new_image(cub -> mlx, WIN_WIDTH, WIN_HEIGHT);
+	cub -> img = mlx_new_image(cub -> mlx, WIDTH, HEIGHT);
 	cub -> ass.no_tex = mlx_load_png(cub -> config.no_conf);
 	cub -> ass.so_tex = mlx_load_png(cub -> config.so_conf);
 	cub -> ass.we_tex = mlx_load_png(cub -> config.we_conf);
